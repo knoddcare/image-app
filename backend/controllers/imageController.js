@@ -15,6 +15,12 @@ const multerStorage = multer.diskStorage({
 
 const upload = multer({
   storage: multerStorage,
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error("File type not supported."));
+    }
+    cb(undefined, true);
+  },
 });
 
 exports.getAllImages = async (req, res, next) => {
