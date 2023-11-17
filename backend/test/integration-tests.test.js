@@ -71,3 +71,18 @@ test("POST /images - upload file with unsupported format", async () => {
 
   expect(response.status).toBe(415);
 });
+
+test("POST /images - Name that contains white space and special characters", async () => {
+  const response = await request
+    .post("/images")
+    .field("name", "Min blå cykel")
+    .attach("photo", "test/utils/test.jpeg");
+
+  // Clean up by removing file again
+  fs.unlink(`public/${response.body.data.data.path}`, (err) => {
+    if (err) throw err;
+  });
+
+  expect(response.status).toBe(201);
+  expect(response.body.data.data.path).toMatch(/^\/img\/Min-bla-cy_\d+\.(jpeg|jpg|png)$/);
+});
