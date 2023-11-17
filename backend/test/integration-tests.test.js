@@ -60,3 +60,12 @@ test("GET /images - returns array of metadata for uploaded images", async () => 
   expect(response.body.data[0].name).toBe(testImageName);
   expect(response.body.data[0].path).toBe(expectedFilePath);
 });
+
+test("POST /images - upload file with unsupported format", async () => {
+  const response = await request
+    .post("/images")
+    .field("name", testImageName)
+    .attach("photo", "test/utils/test.gif");
+
+  expect(response.status).toBe(500);
+});
