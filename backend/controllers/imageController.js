@@ -1,11 +1,14 @@
 const multer = require("multer");
 const ImageMetadata = require("../models/ImageMetadataModel");
+const sharp = require("sharp");
+const path = require("path");
+const fs = require("fs").promises;
 
 const IMG_DIRECTORY_PATH = "public/img";
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, IMG_DIRECTORY_PATH);
+    cb(null, `${IMG_DIRECTORY_PATH}/tmp`);
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.split("/")[1];
@@ -55,4 +58,18 @@ exports.createImageMetadata = async (req, res, next) => {
       data: doc,
     },
   });
+};
+
+exports.resizeImage = async (req, res, next) => {
+  const tmpPath = req.file.path
+  const destPath = `${IMG_DIRECTORY_PATH}/${path.basename(tmpPath)}`;
+
+  await sharp(tmpPath).resize({
+    width: 400,
+    height: 400,
+  }).toFile(destPath);
+
+  await fs.unlink(tmpPath);
+
+  next();
 };
