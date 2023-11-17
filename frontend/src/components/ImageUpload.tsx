@@ -4,6 +4,7 @@ import ErrorIcon from "./icons/ErrorIcon";
 import Preview from "./ImageUpload/Preview";
 import ProgressBar from "./ImageUpload/ProgressBar";
 import SuccessIcon from "./icons/SuccessIcon";
+import toast from "react-hot-toast";
 import { LifecycleStage, useImageUpload } from "../hooks/useImageUpload";
 import { useEffect } from "react";
 
@@ -11,9 +12,21 @@ function ImageUpload() {
   const { lifecycleStage, imageUrl, uploadProgress, upload, reset, setImage } =
     useImageUpload();
 
+  useEffect(() => {
+    if (lifecycleStage === LifecycleStage.Success) {
+      toast.success("Image uploaded successfully.", {
+        position: "bottom-center",
+      });
+    }
+  }, [lifecycleStage]);
+
   const handleDrop = (files: File[]) => {
     if (files.length === 1) {
       setImage(files[0]);
+    } else {
+      toast.error("Invalid file format: Supported formats are JPEG and PNG.", {
+        position: "bottom-center",
+      });
     }
   };
 

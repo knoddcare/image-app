@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.image-uploader .toaster {
+  font-size: 15px;
+}
+
 .image-uploader .image-preview {
   display: flex;
   flex-direction: column;
