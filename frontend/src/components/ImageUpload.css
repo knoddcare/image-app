@@ -1,0 +1,101 @@
+.image-uploader {
+  background: #ffffff04;
+  border: 4px solid #ffffff10;
+  border-radius: 8px;
+  width: 400px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-uploader p {
+  text-align: center;
+}
+
+.image-uploader input[type="text"] {
+  border: 2px solid #ffffff18;
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: 18px;
+  background-color: #ffffff08;
+  color: #ffffffb0;
+}
+
+.image-uploader input[type="text"]::placeholder {
+  color: #ffffff38;
+}
+
+.image-uploader input[type="text"].error {
+  border: 2px solid #cf4074;
+}
+
+.image-uploader .progress-bar {
+  width: 100%;
+  padding: 20%;
+}
+
+.image-uploader .status-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.image-uploader .image-preview {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+
+.image-uploader .image-preview .photo {
+  width: 100%;
+  flex: auto;
+  background-color: #00000060;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.image-uploader .image-preview form,
+.image-uploader .image-preview form .name-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-uploader .image-preview form {
+  border-top: 1px solid #ffffff10;
+  height: 210px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-uploader .image-preview form .name-input {
+  padding: 0 10%;
+}
+
+.image-uploader .image-preview form .name-input label {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+  margin: 10px 0;
+}
+
+.image-uploader .image-preview form .name-input .error-msg {
+  text-align: left;
+  margin: 8px 0;
+  font-size: 13px;
+  color: #cf4074;
+  font-weight: bold;
+}
+
+.image-uploader .image-preview .button-group {
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+}

@@ -1,12 +1,12 @@
 import "./App.css";
+import ImageUpload from "./components/ImageUpload";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Image Uploading App</h1>
-      </header>
-    </div>
+    <main className="app">
+      <h1>Image Uploading App</h1>
+      <ImageUpload />
+    </main>
   );
 }
 
