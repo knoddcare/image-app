@@ -17,7 +17,9 @@ const upload = multer({
   storage: multerStorage,
   fileFilter: (req, file, cb) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error("File type not supported."));
+      const err = new Error("File type not supported.");
+      err.statusCode = 415;
+      return cb(err);
     }
     cb(undefined, true);
   },

@@ -67,5 +67,5 @@ test("POST /images - upload file with unsupported format", async () => {
     .field("name", testImageName)
     .attach("photo", "test/utils/test.gif");
 
-  expect(response.status).toBe(500);
+  expect(response.status).toBe(415);
 });
