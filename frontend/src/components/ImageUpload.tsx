@@ -8,7 +8,11 @@ import toast from "react-hot-toast";
 import { LifecycleStage, useImageUpload } from "../hooks/useImageUpload";
 import { useEffect } from "react";
 
-function ImageUpload() {
+export interface ImageUploadProps {
+  onSuccess: () => void;
+}
+
+function ImageUpload({ onSuccess }: ImageUploadProps) {
   const { lifecycleStage, imageUrl, uploadProgress, upload, reset, setImage } =
     useImageUpload();
 
@@ -17,6 +21,7 @@ function ImageUpload() {
       toast.success("Image uploaded successfully.", {
         position: "bottom-center",
       });
+      onSuccess();
     }
   }, [lifecycleStage]);
 

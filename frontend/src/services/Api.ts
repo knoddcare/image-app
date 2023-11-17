@@ -30,6 +30,10 @@ class ApiService {
   getFiles(): Promise<AxiosResponse<{ data: ImageModel[] }>> {
     return axios.get("/images");
   }
+
+  imageUrlFromPath(path: string): string {
+    return `${axios.getUri()}${path}`;
+  }
 }
 
 export default new ApiService();

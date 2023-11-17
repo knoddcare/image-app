@@ -1,0 +1,14 @@
+.image-gallery {
+  width: 100%;
+  margin: 40px;
+  padding: 0 20%;
+  overflow: auto;
+}
+
+.image-gallery > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
