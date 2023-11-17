@@ -6,13 +6,25 @@ const fs = require("fs").promises;
 
 const IMG_DIRECTORY_PATH = "public/img";
 
+const replaceChars = {
+  ' ': '-',
+  'å': 'a',
+  'ä': 'a',
+  'ö': 'o',
+  'Å': 'A',
+  'Ä': 'A',
+  'Ö': 'O',
+};
+
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, `${IMG_DIRECTORY_PATH}/tmp`);
   },
   filename: (req, file, cb) => {
+    const re = new RegExp(`[${Object.keys(replaceChars).join('')}]`, 'g');
+    const name = req.body.name.substr(0, 10).replace(re, c => replaceChars[c]);
     const extension = file.mimetype.split("/")[1];
-    cb(null, `${req.body.name}.${extension}`);
+    cb(null, `${name}_${new Date().valueOf()}.${extension}`);
   },
 });
 
