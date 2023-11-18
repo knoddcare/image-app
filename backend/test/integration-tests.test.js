@@ -7,7 +7,7 @@ const dropAllCollections = require("./utils/dropAllCollections");
 const request = supertest(app);
 
 const testImageName = "Awesome photo";
-const expectedFilePattern = /^\/img\/Awesome-ph_\d+\.(jpeg|jpg|png)$/
+const expectedFilePattern = /^\/img\/Awesome-ph_\d+\.(jpeg|jpg|png)$/;
 
 // Connects to test database
 beforeAll(async () => {
