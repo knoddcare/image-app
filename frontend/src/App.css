@@ -21,3 +21,33 @@
 .App-link {
   color: #61dafb;
 }
+
+button {
+  background-color: #282c34;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 20px;
+}
+button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #282c34;
+  border: 1px solid #282c34;
+}
+button:disabled {
+  opacity: 0.5;
+  background-color: #282c34;
+  color: white;
+  border: 1px solid white;
+  cursor: not-allowed;
+}
+input {
+  border: 1px solid #282c34;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 20px;
+}

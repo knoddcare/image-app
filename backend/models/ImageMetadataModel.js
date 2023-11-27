@@ -8,6 +8,9 @@ const imageMetadataSchema = new mongoose.Schema(
     path: {
       type: String,
     },
+    physicalPath: {
+      type: String,
+    }
   },
   { collection: "imageMetadata" }
 );
