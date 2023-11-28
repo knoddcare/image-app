@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ImageComponent from './components/Images';
+import ImageComponent from './components/images/Images';
 
 const AppContainer = styled.div`
   display: flex;
