@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.route("/")
   .get(imageController.getAllImages)
-  .post(imageController.uploadImage)
   .post(imageController.createImageMetadata);
 
 module.exports = router;
