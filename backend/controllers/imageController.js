@@ -9,6 +9,17 @@ const multerStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.split("/")[1];
+
+    switch (extension) {
+      case 'png':
+      case 'jpg':
+      case 'jpeg':
+        break;
+      default:
+        console.error(`extension not valid, ${extension}`);
+        return;
+    }
+
     cb(null, `${req.body.name}.${extension}`);
   },
 });
