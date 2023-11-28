@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Image } from '../../models/image';
 
 const _imageUri = 'http://localhost:3002';
 
@@ -11,10 +12,7 @@ const DisplayDiv = styled.div`
 `;
 
 type Props = {
-  image: {
-    name: string,
-    path: string
-  }
+  image: Image
 };
 
 const Display = ({ image }: Props) => {

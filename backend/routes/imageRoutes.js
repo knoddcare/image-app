@@ -3,9 +3,9 @@ const imageController = require("./../controllers/imageController");
 
 const router = express.Router();
 
-router
-  .route("/")
+router.route("/")
   .get(imageController.getAllImages)
-  .post(imageController.uploadImage, imageController.createImageMetadata);
+  .post(imageController.uploadImage)
+  .post(imageController.createImageMetadata);
 
 module.exports = router;
