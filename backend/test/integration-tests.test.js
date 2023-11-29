@@ -12,7 +12,9 @@ const expectedFilePath = "/img/Test.jpeg";
 // Connects to test database
 beforeAll(async () => {
   process.env.ENV = "test";
+
   const url = `mongodb://127.0.0.1/image-app-test-db`;
+
   await mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -31,6 +33,7 @@ test("Return 404 for invalid endpoint", async () => {
   expect(response.body.message).toBe(`Cannot find /invalid on this server!`);
 });
 
+
 test("POST /images - upload image", async () => {
   const response = await request
     .post("/images")
@@ -38,7 +41,6 @@ test("POST /images - upload image", async () => {
     .attach("photo", "test/utils/test.jpeg");
 
   const fileExists = fs.existsSync(`public${expectedFilePath}`);
-
   // Clean up by removing file again
   if (fileExists) {
     fs.unlink(`public${expectedFilePath}`, (err) => {
@@ -47,16 +49,27 @@ test("POST /images - upload image", async () => {
   }
 
   expect(response.status).toBe(201);
-  expect(response.body.data.data.name).toBe(testImageName);
-  expect(response.body.data.data.path).toBe(expectedFilePath);
+  expect(response.body.data.name).toBe(testImageName);
+  expect(response.body.data.path).toBe(expectedFilePath);
   expect(fileExists).toBe(true);
 });
 
 test("GET /images - returns array of metadata for uploaded images", async () => {
+
   const response = await request.get("/images");
 
   expect(response.status).toBe(200);
   expect(response.body.data.length).toBe(1);
   expect(response.body.data[0].name).toBe(testImageName);
   expect(response.body.data[0].path).toBe(expectedFilePath);
+});
+
+test("Post /images - should only allow valid extensins", async () => {
+  const response = await request
+    .post("/images")
+    .field("name", testImageName)
+    .attach("photo", "test/utils/test.invalidExt");
+
+  expect(response.ok).toBe(false);
+  expect(response.status).toBe(400);
 });
