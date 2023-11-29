@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
+const moment = require("moment");
 const app = require("../app");
 const dropAllCollections = require("./utils/dropAllCollections");
 const removeAllFiles = require("./utils/removeAllFiles");
@@ -73,7 +74,7 @@ test("Post /images - should only allow valid extensins", async () => {
 
 test("Post /images - should transform name", async () => {
   const testImageName = "min blå cykel";
-  const expectedFilePathPattern = /\/img\/min-bl-cyk_\d+.jpeg/;
+  const expectedFilePathPattern = /\/img\/min-bl-cyk_(?<dateGroup>\d+).jpeg/;
 
   const response = await request
     .post("/images")
@@ -83,4 +84,11 @@ test("Post /images - should transform name", async () => {
   expect(response.status).toBe(201);
   expect(response.body.data.name).toBe(testImageName);
   expect(expectedFilePathPattern.test(response.body.data.path)).toBe(true);
+
+  const groups = expectedFilePathPattern.exec(response.body.data.path).groups;
+  expect(groups).not.toBeNull();
+
+  const dateGroup = groups['dateGroup'];
+  expect(dateGroup).not.toBeNull();
+  expect(dateGroup.startsWith(moment().format("YYYYMMDDHHmm"))).toBe(true);
 });
