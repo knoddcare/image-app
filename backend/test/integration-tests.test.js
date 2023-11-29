@@ -1,13 +1,10 @@
-const fs = require("fs");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
 const dropAllCollections = require("./utils/dropAllCollections");
+const removeAllFiles = require("./utils/removeAllFiles");
 
 const request = supertest(app);
-
-const testImageName = "Test";
-const expectedFilePath = "/img/Test.jpeg";
 
 // Connects to test database
 beforeAll(async () => {
@@ -21,9 +18,11 @@ beforeAll(async () => {
   });
 });
 
-// Clean up test database and drop connection
+// Clean up test output, database and drop connection
 afterAll(async () => {
   await dropAllCollections();
+  removeAllFiles();
+
   await mongoose.connection.close();
 });
 
@@ -35,36 +34,34 @@ test("Return 404 for invalid endpoint", async () => {
 
 
 test("POST /images - upload image", async () => {
+  const testImageName = "Test";
+  const expectedFilePathPattern = /\/img\/Test_\d+.jpeg/;
+
   const response = await request
     .post("/images")
     .field("name", testImageName)
     .attach("photo", "test/utils/test.jpeg");
 
-  const fileExists = fs.existsSync(`public${expectedFilePath}`);
-  // Clean up by removing file again
-  if (fileExists) {
-    fs.unlink(`public${expectedFilePath}`, (err) => {
-      if (err) throw err;
-    });
-  }
-
   expect(response.status).toBe(201);
   expect(response.body.data.name).toBe(testImageName);
-  expect(response.body.data.path).toBe(expectedFilePath);
-  expect(fileExists).toBe(true);
+  expect(expectedFilePathPattern.test(response.body.data.path)).toBe(true);
 });
 
 test("GET /images - returns array of metadata for uploaded images", async () => {
+  const testImageName = "Test";
+  const expectedFilePathPattern = /\/img\/Test_\d+.jpeg/;
 
   const response = await request.get("/images");
 
   expect(response.status).toBe(200);
   expect(response.body.data.length).toBe(1);
   expect(response.body.data[0].name).toBe(testImageName);
-  expect(response.body.data[0].path).toBe(expectedFilePath);
+  expect(expectedFilePathPattern.test(response.body.data[0].path)).toBe(true);
 });
 
 test("Post /images - should only allow valid extensins", async () => {
+  const testImageName = "Test";
+
   const response = await request
     .post("/images")
     .field("name", testImageName)
@@ -72,4 +69,18 @@ test("Post /images - should only allow valid extensins", async () => {
 
   expect(response.ok).toBe(false);
   expect(response.status).toBe(400);
+});
+
+test("Post /images - should transform name", async () => {
+  const testImageName = "min blå cykel";
+  const expectedFilePathPattern = /\/img\/min-bl-cyk_\d+.jpeg/;
+
+  const response = await request
+    .post("/images")
+    .field("name", testImageName)
+    .attach("photo", "test/utils/test.jpeg");
+ 
+  expect(response.status).toBe(201);
+  expect(response.body.data.name).toBe(testImageName);
+  expect(expectedFilePathPattern.test(response.body.data.path)).toBe(true);
 });
