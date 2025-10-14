@@ -23,7 +23,35 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   
+    if (!file) {
+      alert("Please select an image file.");
+      return;
+    }
+
+    // Create a FormData object to send file + name
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("photo", file);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/images`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Upload successful:", data);
+      alert("Image uploaded successfully!");
+      setName("");
+      setFile(null);
+    } catch (error) {
+      console.error(error);
+      alert("Error uploading image. Check console for details.");
+    }
   };
 
   return (
