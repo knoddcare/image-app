@@ -1,32 +1,37 @@
 const multer = require("multer");
+const path = require("path");
+const sharp = require("sharp");
 const ImageMetadata = require("../models/ImageMetadataModel");
-
+const formatFileName = require("../utils/formatFileName");
 const IMG_DIRECTORY_PATH = "public/img";
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, IMG_DIRECTORY_PATH);
-  },
-  filename: (req, file, cb) => {
-    const extension = file.mimetype.split("/")[1];
-    cb(null, `${req.body.name}.${extension}`);
-  },
-});
 
+// Multer setup — store uploaded files in memory
+const multerStorage = multer.memoryStorage();
 const upload = multer({
   storage: multerStorage,
 });
 
 exports.getAllImages = async (req, res, next) => {
-  const data = await ImageMetadata.find();
+  try {
+    const data = await ImageMetadata.find();
 
-  return res.status(200).json({
-    status: "success",
-    data: data,
-  });
+    return res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      status: "error",
+      message: "Something went wrong while fetching images",
+    });
+  }
 };
 
+// Middleware to handle single file upload
 exports.uploadImage = upload.single("photo");
+
 
 exports.createImageMetadata = async (req, res, next) => {
   const doc = await ImageMetadata.create({
