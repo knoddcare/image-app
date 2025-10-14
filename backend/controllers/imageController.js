@@ -34,25 +34,6 @@ exports.uploadImage = upload.single("photo");
 
 // Controller to process image and save metadata
 exports.createImageMetadata = async (req, res, next) => {
-  // const doc = await ImageMetadata.create({
-  //   name: req.body.name,
-  //   path: `/img/${req.file.filename}`,
-  // });
-
-  // if (!doc) {
-  //   return res.status(400).json({
-  //     status: "fail",
-  //     message: "invalid input",
-  //   });
-  // }
-
-  // return res.status(201).json({
-  //   status: "success",
-  //   data: {
-  //     data: doc,
-  //   },
-  // });
-
 
   try {
     if (!req.file) {
@@ -66,7 +47,6 @@ exports.createImageMetadata = async (req, res, next) => {
       req.file.mimetype !== "image/jpeg" &&
       req.file.mimetype !== "image/png"
     ) {
-      console.log("not right type")
       return res.status(400).json({
         status: "fail",
         message: "Only JPEG and PNG images are allowed",
