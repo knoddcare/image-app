@@ -7,9 +7,10 @@ function App() {
 
   // State for the image name
   const [name, setName] = useState("");
-
   // State for the selected image file
   const [file, setFile] = useState<File | null>(null);
+  // State for error message
+  const [error, setError] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -23,8 +24,13 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) {
-      alert("Please select an image file.");
+    if (!file || !name) {
+      setError("Please provide a file and a name");
+      return;
+    }
+    const allowedTypes = ["image/jpeg", "image/png"];
+    if (!allowedTypes.includes(file.type)) {
+      setError("Only JPEG and PNG files are allowed");
       return;
     }
 
@@ -39,17 +45,20 @@ function App() {
         body: formData,
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error(`Upload failed: ${response.statusText}`);
+        setError(data.message || "Something went wrong during upload");
+        return;
       }
 
-      const data = await response.json();
-      console.log("Upload successful:", data);
-      alert("Image uploaded successfully!");
+      // Clear error on success
+      setError("");
+      alert("Upload successful!");
       setName("");
       setFile(null);
-    } catch (error) {
-      console.error(error);
+    } catch (err: any) {
+      console.error(err);
       alert("Error uploading image. Check console for details.");
     }
   };
@@ -73,6 +82,7 @@ function App() {
         <div className="form-group">
           <label htmlFor="image-file">Choose Image:</label>
           <input
+            key={file ? file.name : ""}
             id="image-file"
             type="file"
             accept="image/*"
@@ -85,6 +95,7 @@ function App() {
           Upload
         </button>
       </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }

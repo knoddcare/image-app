@@ -47,3 +47,9 @@ input[type="file"] {
   font-size: 1rem;
   cursor: pointer;
 }
+
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
