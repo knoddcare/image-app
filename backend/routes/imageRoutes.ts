@@ -1,5 +1,5 @@
-const express = require("express");
-const imageController = require("./../controllers/imageController");
+import express from "express";
+import * as imageController from "../controllers/imageController";
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ router
   .get(imageController.getAllImages)
   .post(imageController.uploadImage, imageController.createImageMetadata);
 
-module.exports = router;
+export default router;
