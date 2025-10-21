@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { app } from "./app";
+import { app } from "./app.js";
 
 const DB_URL = process.env.DB_HOST || "mongodb://127.0.0.1/image-app-db";
 const PORT = process.env.PORT || 3002;

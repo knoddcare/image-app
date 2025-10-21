@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { imageRouter } from "./routes/imageRoutes";
+import { imageRouter } from "./routes/imageRoutes.js";
 
 // Create app
 export const app = express();
@@ -34,7 +34,7 @@ interface CustomError extends Error {
 }
 
 app.use(
-  (err: CustomError, req: Request, res: Response, _next: NextFunction) => {
+  (err: CustomError, _req: Request, res: Response, _next: NextFunction) => {
     res.status(err.status || 500).json({
       status: "error",
       message: err.message || "Internal Server Error",

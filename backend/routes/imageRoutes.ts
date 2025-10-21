@@ -3,7 +3,7 @@ import {
   createImageMetadata,
   getAllImages,
   uploadImage,
-} from "../controllers/imageController";
+} from "../controllers/imageController.js";
 
 export const imageRouter = express.Router();
 
