@@ -1,6 +1,7 @@
 import fs from "fs";
 import mongoose from "mongoose";
 import supertest from "supertest";
+import { afterAll, beforeAll, expect, test } from "vitest";
 import { app } from "../app.js";
 import { dropAllCollections } from "./utils/dropAllCollections.js";
 
