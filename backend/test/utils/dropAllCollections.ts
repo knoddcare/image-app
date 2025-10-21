@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const dropAllCollections = async () => {
+export const dropAllCollections = async () => {
   const collections = Object.keys(mongoose.connection.collections);
   for (const collectionName of collections) {
     const collection = mongoose.connection.collections[collectionName];
@@ -13,5 +13,3 @@ const dropAllCollections = async () => {
     }
   }
 };
-
-export default dropAllCollections;

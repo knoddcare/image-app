@@ -1,19 +1,26 @@
 import express, { NextFunction, Request, Response } from "express";
 import imageRouter from "./routes/imageRoutes";
 
-const app = express();
+// Create app
+export const app = express();
 
+// Enable CORS for frontend
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   next();
 });
 
+// Body parser - middleware that modifies incoming request data into json
 app.use(express.json({ limit: "10kb" }));
 
+// Serving static files
 app.use(express.static("public"));
 
 app.use("/images", imageRouter);
 
+// ---- Error handling for routes
+
+// 404 handler
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({
     status: "fail",
@@ -21,6 +28,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+// Error handler
 interface CustomError extends Error {
   status?: number;
 }
@@ -31,5 +39,3 @@ app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
     message: err.message || "Internal Server Error",
   });
 });
-
-export default app;

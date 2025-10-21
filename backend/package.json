@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node index.ts",
+    "start": "nodemon --exec ts-node index.ts",
     "start:db": "docker run --name mongo-test -d -p 27017:27017 --rm -it mongo:8 mongod",
     "stop:db": "docker rm -f mongo-test",
     "test:integration": "jest test/integration-tests.test.ts"

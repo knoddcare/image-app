@@ -1,8 +1,8 @@
 import fs from "fs";
 import mongoose from "mongoose";
 import supertest from "supertest";
-import app from "../app";
-import dropAllCollections from "./utils/dropAllCollections";
+import { app } from "../app";
+import { dropAllCollections } from "./utils/dropAllCollections";
 
 const request = supertest(app);
 

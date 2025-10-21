@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import multer from "multer";
-import ImageMetadata from "../models/ImageMetadataModel";
+import { ImageMetadata } from "../models/ImageMetadataModel";
 
 const IMG_DIRECTORY_PATH = "public/img";
 

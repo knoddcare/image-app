@@ -80,7 +80,7 @@ npm install
 3. Start the backend
 
 ```bash
-npm run dev
+npm run start
 ```
 
 The API is now available on `http://localhost:3002`
