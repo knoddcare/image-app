@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3002;
 mongoose
   .connect(DB_URL)
   .then(() => console.log("Database connection established successfully"))
-  .catch((err) => console.error("Error occurred while connecting to DB!"));
+  .catch((_err) => console.error("Error occurred while connecting to DB!"));
 
 // Run the server
 app.listen(PORT, () => {

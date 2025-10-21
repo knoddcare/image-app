@@ -1,11 +1,10 @@
 import express from "express";
-import * as imageController from "../controllers/imageController";
+import {
+  createImageMetadata,
+  getAllImages,
+  uploadImage,
+} from "../controllers/imageController";
 
-const router = express.Router();
+export const imageRouter = express.Router();
 
-router
-  .route("/")
-  .get(imageController.getAllImages)
-  .post(imageController.uploadImage, imageController.createImageMetadata);
-
-export default router;
+imageRouter.route("/").get(getAllImages).post(uploadImage, createImageMetadata);

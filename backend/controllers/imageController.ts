@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import multer from "multer";
-import { ImageMetadata } from "../models/ImageMetadataModel";
+import { ImageMetadataModel } from "../models/ImageMetadataModel";
 
 const IMG_DIRECTORY_PATH = "public/img";
 
 const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (_req, _file, cb) => {
     cb(null, IMG_DIRECTORY_PATH);
   },
   filename: (req, file, cb) => {
@@ -19,11 +19,11 @@ const upload = multer({
 });
 
 export const getAllImages = async (
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
-  const data = await ImageMetadata.find();
+  const data = await ImageMetadataModel.find();
 
   return res.status(200).json({
     status: "success",
@@ -36,7 +36,7 @@ export const uploadImage = upload.single("photo");
 export const createImageMetadata = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   if (!req.file) {
     return res.status(400).json({
@@ -45,7 +45,7 @@ export const createImageMetadata = async (
     });
   }
 
-  const doc = await ImageMetadata.create({
+  const doc = await ImageMetadataModel.create({
     name: req.body.name,
     path: `/img/${req.file.filename}`,
   });

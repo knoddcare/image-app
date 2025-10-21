@@ -17,7 +17,7 @@ const imageMetadataSchema = new Schema<IImageMetadata>(
   { collection: "imageMetadata" }
 );
 
-export const ImageMetadata = mongoose.model<IImageMetadata>(
+export const ImageMetadataModel = mongoose.model<IImageMetadata>(
   "ImageMetadata",
   imageMetadataSchema
 );
