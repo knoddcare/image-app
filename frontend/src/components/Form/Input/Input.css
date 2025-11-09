@@ -1,0 +1,32 @@
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.input-group label {
+  color: var(--color-white);
+  position: absolute;
+  top: 50%;
+  transform: translate(1.25rem, calc(-50% - 2px));
+  transition: transform .2s, font-size .2s, color .2s;
+  pointer-events: none;
+}
+
+.input-group input {
+  padding: .625rem 1.25rem;
+  font-size: 1rem;
+  background-color: transparent;
+  border: .0625rem solid var(--color-white);
+  color: var(--color-white);
+  border-radius: 1.25rem;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  transform: translate(0, calc(-200% - .9375rem));
+  color: var(--color-white);
+  font-size: .75rem;
+}

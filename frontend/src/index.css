@@ -1,13 +1,55 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+:root {
+  --color-background: #282c34;
+  --color-link: #61dafb;
+  --color-primary: #607bff;
+  --color-primary-hover: #5f64f9;
+  --color-white: #ffffff;
+  --color-red: #e9706c;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  --max-content-width: 50rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+.primary-button {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  border: 0;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-radius: 1.25rem;
+  padding: .75rem 1.25rem;
+  cursor: pointer;
+  transition: background-color .3s;
+  text-align: center;
+}
+
+.primary-button:hover {
+  background-color: var(--color-primary-hover);
 }

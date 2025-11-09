@@ -1,0 +1,27 @@
+.upload {
+  max-width: var(--max-content-width, 50rem);
+  margin: 0 auto;
+}
+
+.upload form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+  max-width: 25rem;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.upload .input-group,
+.upload .upload-button {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.upload .primary-button {
+  align-self: flex-end;
+}
+
+.success-message {
+  color: var(--color-white);
+}
